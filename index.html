@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chá Rifa da Aurora</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #ffd6f2, #e5b3ff);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+        .container {
+            background: #ffffffcc;
+            padding: 20px;
+            border-radius: 10px;
+            width: 320px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        button {
+            padding: 10px 15px;
+            border: none;
+            background: #d46bff;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background: #b056e0;
+        }
+        .contador {
+            font-size: 32px;
+            margin: 10px 0;
+            display: none;
+        }
+        .resultado {
+            font-size: 22px;
+            margin-top: 20px;
+            font-weight: bold;
+            display: none;
+        }
+
+        /* Borboletas */
+        .borboleta {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            animation: voar 8s linear infinite;
+            opacity: 0.9;
+        }
+
+        @keyframes voar {
+            0% { transform: translateY(100vh) translateX(0); }
+            50% { transform: translateY(50vh) translateX(40px) rotate(20deg); }
+            100% { transform: translateY(-10vh) translateX(-40px) rotate(-20deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Chá Rifa da Aurora</h2>
+
+        <label>Digite o início do intervalo:</label>
+        <input type="number" id="inicio" placeholder="Ex: 1" style="width:100%; padding:8px; margin-bottom:10px;">
+
+        <label>Digite o final do intervalo:</label>
+        <input type="number" id="fim" placeholder="Ex: 100" style="width:100%; padding:8px; margin-bottom:15px;">
+
+        <button onclick="iniciarSorteio()">Sortear</button>
+
+        <div id="contador" class="contador"></div>
+        <div id="resultado" class="resultado"></div>
+    </div>
+
+    <!-- Borboletas -->
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Butterfly_icon.svg/120px-Butterfly_icon.svg.png" class="borboleta" style="left: 10%; animation-delay: 0s;">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Butterfly_icon.svg/120px-Butterfly_icon.svg.png" class="borboleta" style="left: 50%; animation-delay: 2s;">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Butterfly_icon.svg/120px-Butterfly_icon.svg.png" class="borboleta" style="left: 80%; animation-delay: 4s;">
+
+    <script>
+        function esperar(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
+        async function iniciarSorteio() {
+            const inicio = document.getElementById('inicio').value;
+            const fim = document.getElementById('fim').value;
+
+            if (!inicio || !fim) {
+                alert("Preencha os dois campos!");
+                return;
+            }
+
+            const contadorDiv = document.getElementById('contador');
+            const resultadoDiv = document.getElementById('resultado');
+
+            resultadoDiv.style.display = 'none';
+
+            contadorDiv.style.display = 'block';
+            for (let i = 5; i >= 1; i--) {
+                contadorDiv.innerText = i;
+                await esperar(800);
+            }
+
+            contadorDiv.style.display = 'none';
+
+            const numero1 = 20;
+            const numero2 = 59;
+
+            resultadoDiv.innerHTML = `Os números sorteados foram:<br><br> <strong>${numero1} e ${numero2}</strong><br><br>Parabéns a todos os participantes!<br>O ganhador deve entrar em contato.`;
+            resultadoDiv.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
